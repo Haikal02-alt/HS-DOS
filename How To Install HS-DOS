@@ -1,0 +1,115 @@
+It Is Hard To Install HS-DOS Because HS-DOS Have Manual Installation
+To Install It
+
+1. Locales
+   Set keyboard layout:
+   loadkeys us
+   Generate locale
+   echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+   locale-gen
+   echo "LANG=en_US.UTF-8" > /etc/locale.conf
+2 Mirrors
+  Edit /etc/pacman.d/mirrorlist and place fastest mirrors at the top.
+  Use reflector if available
+  reflector --country 'Indonesia' --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
+3 Disk Configuration
+  Partition disk manually
+  fdisk /dev/sda
+  Example layout:
+
+    /dev/sda1 → EFI (512MB, type EFI System)
+
+    /dev/sda2 → root (rest of disk)
+
+    /dev/sda3 → swap (optional)
+
+   Format:
+   mkfs.fat -F32 /dev/sda1
+   mkfs.ext4 /dev/sda2
+   mkswap /dev/sda3
+   swapon /dev/sda3
+
+   Mount:
+   mount /dev/sda2 /mnt
+   mkdir /mnt/boot
+   mount /dev/sda1 /mnt/boot
+
+4. Base System
+   Install base packages:
+   pacstrap /mnt base linux linux-firmware vim
+   For HS-DOS kernel masks, add:
+   pacstrap /mnt linux-lts linux-zen
+5. Swap
+   Already configured with mkswap and swapon. Add to /etc/fstab:
+   genfstab -U /mnt >> /mnt/etc/fstab
+6. Bootloader
+   Chroot:
+   arch-chroot /mnt
+   Install GRUB:
+   pacman -S grub efibootmgr
+   grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=HS-DOS
+   grub-mkconfig -o /boot/grub/grub.cfg
+7. Kernels
+   HS-DOS offers two kernels:
+   linux-lts
+   linux-zen
+
+Both can be installed side by side. GRUB will list them at boot.
+
+8. Hostname
+   echo "hs-dos" > /etc/hostname
+9. User & Root Accounts
+   Set root password:
+   sudo passwd root
+   Create user:
+   useradd -m -G wheel -s /bin/bash yourname
+   passwd yourpassword
+   Enable sudo:
+   EDITOR=vim visudo
+   Uncomment %wheel ALL=(ALL) ALL.
+10. Network Configuration
+    Enable DHCP:
+    systemctl enable dhcpcd
+    Or configure manually in /etc/systemd/network/.
+11. Timezone & Clock
+    Set timezone:
+    ln -sf /usr/share/zoneinfo/Asia/Makassar /etc/localtime
+    hwclock --systohc
+12 Exit And Reboot
+
+   Exit the chroot""
+   If you’re inside the arch-chroot environment:
+   exit
+   Unmount partitions
+   Before rebooting, unmount everything you mounted under /mnt:
+   umount -R /mnt
+13 Reboot the system
+   Finally, reboot:
+   sudo reboot
+14 run sudo pacman -S fastfetch
+15 Install Nano sudo pacman -S nano
+16 Run sudo nano /etc/os-release
+   Then Change NAME="Arch Linux" To NAME="HS-DOS"
+   Then Change PRETTY_NAME="Arch Linux" To PRETTY_NAME="HS-DOS"
+   Then Change ID=arch To ID=hsdos
+   Then Change Home_URL="https://archlinux.org/" To Home_URL="https://github.com/Haikal02-alt/HS-DOS"
+   Then ctrl x y enter
+17 Run sudo nano /etc/default/grub
+   Then Change GRUB_DISTRIBUTOR="Arch" To GRUB_DISTRIBUTOR="HS-DOS"
+   Then Change GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet" To GRUB_CMDLINE_LINUX_DEFAULT="quiet"
+   update grub using sudo grub-mkconfig -o /boot/grub/grub.cfg
+   Customize Menu Entries using sudo nano /etc/grub.d/10_linux
+   If You See if [ "x${GRUB_DISTRIBUTOR}" = "x" ] ; then
+                OS=Linux
+   And OS="${GRUB_DISTRIBUTOR} Linux"
+   Change It To if [ "x${GRUB_DISTRIBUTOR}" = "x" ] ; then
+                  OS=
+   And OS="${GRUB_DISTRIBUTOR}"
+   Find GRUB_DISABLE_SUBMENU
+   If You Found It Change GRUB_DISABLE_SUBMENU="true" To GRUB_DISABLE_SUBMENU="false"
+   Regenerate GRUB Config
+   After editing, regenerate the GRUB menu
+   sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+18 Have Fun And Start Using HS-DOS Which Is Arch MS-DOS Like
+   
