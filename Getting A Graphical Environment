@@ -1,0 +1,79 @@
+Before Install You Must Install NetworkManager By Using sudo pacman -S networkmanager
+For Audio Systems
+Pipewire
+sudo pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber
+Pulseaudio
+sudo pacman -S pulseaudio pulseaudio-alsa
+pulseaudio --start
+Getting A Graphical Environment Which You Must And Recommended To use LXDE Because Its Faster On Old Hardware And Its Recommended To Install LXDM Because LXDM (LXDE Display Manager) is a lightweight display manager designed for low-resource environments.
+Specifically developed for the LXDE desktop environment
+it provides a fast, GTK+-based graphical login interface that is well-suited for older machines or systems requiring minimal overhead 
+if theres lightdm sudo pacman -Rns lightdm lightdm-gtk-greeter
+If Theres No Lightdm Enable LXDM Services
+sudo systemctl enable lxdm.service
+sudo systemctl start lxdm.service
+If It Didnt Start reboot using sudo reboot
+But If It Didnt Login To Lxde
+However You Can Install Other Desktop Environment Like GNOME KDE Plasma XFCE MATE LXQT And More
+sudo pacman -S lxde lxdm
+After You Install The Desktop Environment Install Firefox using sudo pacman -S firefox
+Then Go To https://github.com/Haikal02-alt/HS-DOS
+Then Download The HS-DOS Logo On readme
+Then Save Image As Then if You See 543402333-30d3a74a-3e27-448e-9ae9-0e927a96ab00.png Rename It To hsdos-logo.png then save it to download
+Then sudo mv /home/yourname/Downloads/hsdos-logo.png /usr/share/pixmaps
+Then sudo cp /usr/share/pixmaps/hsdos-logo.png /usr/share/pixmaps/archlinux-logo.png
+Then sudo cp /usr/share/pixmaps/hsdos-logo.png /usr/share/pixmaps/archlinux-logo.svg
+Then sudo cp /usr/share/pixmaps/hsdos-logo.png /usr/share/pixmaps/archlinux-logo-text.svg
+Then sudo cp /usr/share/pixmaps/hsdos-logo.png /usr/share/pixmaps/archlinux-logo-text-dark.svg
+
+Installing KDE Plasma
+
+Install With sudo pacman -S
+sudo pacman -S plasma konsole dolphin
+Enable Display Manager
+sudo pacman -S sddm
+sudo systemctl enable sddm
+sudo systemctl start sddm
+
+Open Konsole
+Then run sudo nano /etc/os-release
+Then Change LOGO=archlinux-logo To LOGO=/usr/share/pixmaps/hsdos-logo.png
+Ctrl X Y Enter
+
+Go To System settings Then Notifications Then System Notifications Then Play A Sound On Login And Logout Then Click apply
+
+Other Desktop Environment
+
+Gnome
+sudo pacman -S gnome-extra
+Cinnamon
+sudo pacman -S cinnamon
+XFCE
+sudo pacman -S xfce4
+LXQt
+sudo pacman -S lxqt
+MATE
+sudo pacman -S mate mate-extra
+
+Popular Tiling & Lightweight Window Managers
+
+Hyprland (Wayland compositor)
+sudo pacman -S hyprland
+Sway (Wayland i3-like compositor)
+sudo pacman -S sway
+i3wm
+sudo pacman -S i3-wm i3status dmenu
+MangoWM (community/AUR, not in official repos)  
+Install via AUR helper (e.g., yay)
+yay -S mangowm
+IceWM
+sudo pacman -S icewm
+
+Other Display Managers
+
+GDM3
+sudo pacman -S gdm
+sudo systemctl enable gdm
+LightDM
+sudo pacman -S lightdm lightdm-gtk-greeter
+sudo systemctl enable lightdm
