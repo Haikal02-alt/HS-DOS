@@ -42,10 +42,18 @@ Ctrl X Y Enter
 
 Go To System settings Then Notifications Then System Notifications Then Play A Sound On Login And Logout Then Click apply
 
+Installing GNOME
+
+Install Gnome
+sudo pacman -S gnome gnome-extra
+Enable Services
+sudo systemctl enable gdm.service --force
+sudo systemctl start gdm.service
+sudo nano /etc/os-release
+Change LOGO=archlinux-logo To LOGO=/usr/share/pixmaps/hsdos-logo.png
+
 Other Desktop Environment
 
-Gnome
-sudo pacman -S gnome-extra
 Cinnamon
 sudo pacman -S cinnamon
 XFCE
@@ -71,9 +79,6 @@ sudo pacman -S icewm
 
 Other Display Managers
 
-GDM3
-sudo pacman -S gdm
-sudo systemctl enable gdm
 LightDM
 sudo pacman -S lightdm lightdm-gtk-greeter
 sudo systemctl enable lightdm
